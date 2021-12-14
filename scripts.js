@@ -42,6 +42,20 @@ function displayBooks() {
   });
 }
 
+
+const form = document.getElementById('addBookForm');
+const modal = new bootstrap.Modal(document.getElementById('myModal'));
+
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // console.log(e);
+  
+  
+  modal.hide();
+  form.reset();
+} );
+
 let book1 = new Book('The Great Gatsby', 'F. Scott Fitzgerald', 'images/bc-thegreatgatsby.jpg');
 let book2 = new Book('Harry Potter and the Philosopher\'s Stone', 'J. K. Rowling', 'images/bc-harrypotterandthephilosophersstone.jpg');
 let book3 = new Book('Animal Farm', 'George Orwell', 'images/bc-animalfarm.jpg');

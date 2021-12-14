@@ -25,3 +25,8 @@
 .book-details li {
   margin-bottom: 5px;
 }
+
+#addBookBtn {
+  display: block;
+  margin: 0 auto 10px auto;
+}
