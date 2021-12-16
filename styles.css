@@ -30,3 +30,7 @@
   display: block;
   margin: 0 auto 10px auto;
 }
+
+.invalid-feedback {
+  display: block;
+}

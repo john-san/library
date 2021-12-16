@@ -9,9 +9,10 @@ function Book(title, author, read = false, bookCover = 'images/bc-default.jpg') 
 }
 
 function addBookToLibrary(book) {
-  let titles = myLibrary.map(book => book.title);
+  const titles = myLibrary.map(book => book.title);
   if (!titles.includes(book.title)) {
     myLibrary.push(book);
+    appendBookToContainer(book);
   }
 }
 
@@ -20,31 +21,33 @@ function displayBooks() {
     container.replaceChildren();
   }
   myLibrary.forEach(book => {
-    let bookEl = document.createElement('div');
-    bookEl.classList.add('book');
-    let bookDetails = document.createElement('ul');
-    bookDetails.classList.add('book-details');
-
-    for (let key in book) {
-      if (key == 'bookCover') {
-        let cover = document.createElement('img');
-        cover.classList.add('book-cover');
-        cover.setAttribute('src', book[key]);
-        bookEl.appendChild(cover);
-      } else {
-        let detail = document.createElement('li');
-        detail.classList.add('book-detail');
-        detail.textContent = `${key}: ${book[key]}`;
-        bookDetails.appendChild(detail);
-      }
-      
-    }
-
-    bookEl.appendChild(bookDetails);
-    container.appendChild(bookEl);
+   appendBookToContainer(book); 
   });
 }
 
+function appendBookToContainer(book) {
+  const bookEl = document.createElement('div');
+  bookEl.classList.add('book');
+  const bookDetails = document.createElement('ul');
+  bookDetails.classList.add('book-details');
+
+  for (let key in book) {
+    if (key == 'bookCover') {
+      const cover = document.createElement('img');
+      cover.classList.add('book-cover');
+      cover.setAttribute('src', book[key]);
+      bookEl.appendChild(cover);
+    } else {
+      const detail = document.createElement('li');
+      detail.classList.add('book-detail');
+      detail.textContent = `${key}: ${book[key]}`;
+      bookDetails.appendChild(detail);
+    }
+  }
+
+  bookEl.appendChild(bookDetails);
+  container.appendChild(bookEl);
+}
 
 const form = document.getElementById('addBookForm');
 const modal = new bootstrap.Modal(document.getElementById('myModal'));
@@ -54,10 +57,14 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   // console.log(e);
   
-  createBookFromForm();
-  displayBooks();
-  modal.hide();
-  form.reset();
+  if (validateBookTitle()) {
+    createBookFromForm();
+    modal.hide();
+    form.reset();
+    if (document.querySelector('.invalid-feedback')) {
+      clearInvalidFeedbackMsgs();
+    }
+  }
 } );
 
 let book1 = new Book('The Great Gatsby', 'F. Scott Fitzgerald', false, 'images/bc-thegreatgatsby.jpg');
@@ -80,5 +87,27 @@ function createBookFromForm() {
 
 function getObjectUrl(file) {
   return file ? URL.createObjectURL(file) : 'images/bc-default.jpg'
+}
+
+function validateBookTitle() {
+  const bookTitle = document.getElementById('title').value.toLowerCase();  
+  const titles = myLibrary.map(book => book.title.toLowerCase());
+  if (titles.includes(bookTitle)) {
+    const errorEl = document.createElement('div')
+    errorEl.classList.add('invalid-feedback');
+    errorEl.textContent = 'Book title must be unique';
+    const titleInputArea = document.getElementById('addBookForm').children[0];
+    if (!titleInputArea.querySelector('.invalid-feedback')) {
+      titleInputArea.appendChild(errorEl);
+    }
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function clearInvalidFeedbackMsgs() {
+  const arr = [...document.querySelectorAll('.invalid-feedback')];
+  arr.forEach(el => el.remove());
 }
 
