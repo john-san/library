@@ -8,6 +8,19 @@ function Book(title, author, read = false, bookCover = 'images/bc-default.jpg') 
   this.bookCover = bookCover;
 }
 
+Book.prototype.getIndex = function() {
+  const titles = myLibrary.map(book => book.title);
+  return titles.findIndex(title => title == this.title);
+}
+
+Book.prototype.removeSelf = function() {
+  const idx = this.getIndex();
+  const el = document.querySelector(`[data-attribute='${idx}']`);
+  el.remove();
+  myLibrary.splice(idx, 1);
+  resetDataAttributes();
+}
+
 function addBookToLibrary(book) {
   const titles = myLibrary.map(book => book.title);
   if (!titles.includes(book.title)) {
@@ -27,6 +40,7 @@ function displayBooks() {
 
 function appendBookToContainer(book) {
   const bookEl = document.createElement('div');
+  bookEl.setAttribute('data-attribute', book.getIndex());
   bookEl.classList.add('book');
   const bookDetails = document.createElement('ul');
   bookDetails.classList.add('book-details');
@@ -38,12 +52,23 @@ function appendBookToContainer(book) {
       cover.setAttribute('src', book[key]);
       bookEl.appendChild(cover);
     } else {
-      const detail = document.createElement('li');
-      detail.classList.add('book-detail');
-      detail.textContent = `${key}: ${book[key]}`;
-      bookDetails.appendChild(detail);
+      if (typeof book[key] != 'function') {
+        const detail = document.createElement('li');
+        detail.classList.add('book-detail');
+        detail.textContent = `${key}: ${book[key]}`;
+        bookDetails.appendChild(detail);
+      }
     }
   }
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('btn', 'btn-danger');
+  deleteBtn.textContent = 'x';
+  deleteBtn.addEventListener('click', (e) => {
+    const idx = parseInt((e.target.parentNode.getAttribute('data-attribute')));
+    myLibrary[idx].removeSelf();
+  })
+  bookEl.prepend(deleteBtn);
 
   bookEl.appendChild(bookDetails);
   container.appendChild(bookEl);
@@ -79,7 +104,8 @@ displayBooks();
 function createBookFromForm() {
   const bookTitle = document.getElementById('title').value;  
   const bookAuthor = document.getElementById('author').value;
-  const readStatus = document.getElementById('inlineRadio2').value;
+  const readStatus = document.getElementById('inlineRadio1').checked == true ? true : false;
+  
   const bookCoverSrc = getObjectUrl(document.getElementById('bookCoverInput').files[0]);
   const newBook = new Book(bookTitle, bookAuthor, readStatus, bookCoverSrc);
   addBookToLibrary(newBook);
@@ -111,3 +137,10 @@ function clearInvalidFeedbackMsgs() {
   arr.forEach(el => el.remove());
 }
 
+function resetDataAttributes() {
+  const bookEls = [...document.querySelectorAll('.book')];
+
+  bookEls.forEach((el, idx) => {
+    el.setAttribute('data-attribute', idx);
+  })
+}

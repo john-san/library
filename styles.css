@@ -1,8 +1,12 @@
+h1 {
+  text-align: center;
+}
+
 .container {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 10px;
 }
 
 .book {
@@ -10,10 +14,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 5px;
 }
 .book-cover {
   height: 300px;
   width: auto;
+  max-width: 200px;
 }
 
 .book-details {
@@ -33,4 +41,11 @@
 
 .invalid-feedback {
   display: block;
+}
+
+.book .btn-danger {
+  align-self: end;
+  line-height: .5;
+  padding: 8px;
+  margin-bottom: 5px;
 }
