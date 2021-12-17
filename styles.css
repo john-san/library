@@ -1,5 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+
+/* https://coolors.co/606c38-283618-fefae0-dda15e-bc6c25 */
+
+:root {
+  --dark-olive-green: #606C38;
+  --kombu-green: #283618;
+  --cornsilk: #FEFAE0;
+  --fawn: #DDA15E;
+  --liver-dogs: #BC6C25;
+}
+
+
+body {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px;
+  background-color: var(--cornsilk);
+}
+
 h1 {
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .container {
@@ -10,24 +31,29 @@ h1 {
 }
 
 .book {
-  flex: 0 0 200px;
+  flex: 0 0 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  border: 2px solid var(--liver-dogs);
   border-radius: 8px;
-  padding: 5px;
+  padding: 5px 10px;
+  background-color: var(--fawn);
 }
+
 .book-cover {
-  height: 300px;
+  height: 200px;
   width: auto;
   max-width: 200px;
+  margin-bottom: 8px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.75);
 }
 
 .book-details {
   list-style: none;
   margin-left: 0;
   padding-left: 0;
+  font-size: 14px;
 }
 
 .book-details li {
@@ -36,7 +62,20 @@ h1 {
 
 #addBookBtn {
   display: block;
-  margin: 0 auto 10px auto;
+  margin: 0 auto 25px auto;
+  background-color: var(--dark-olive-green);
+  border: var(--kombu-green) 1px solid;
+}
+
+#addBookBtn:hover {
+  background-color: var(--kombu-green);
+}
+
+.btn-primary:active:focus {
+  box-shadow: 0 0 0 0.25rem rgb(96 108 56 / 50%);
+}
+#addBooktBtn:focus, .btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgb(96 108 56 / 50%);
 }
 
 .invalid-feedback {
@@ -50,6 +89,60 @@ h1 {
   margin-bottom: 5px;
 }
 
+.btn-danger i {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
 .read-status {
   cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+}
+
+footer i {
+  color: var(--dark-olive-green);
+  transition: transform .15s ease-in-out;
+}
+
+footer i:hover {
+  color: var(--kombu-green);
+  transform: scale(1.2);
+}
+
+@media screen and (min-width: 450px) {
+  .book {
+    flex: 0 0 250px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .container {
+    justify-content: flex-start;
+  }
+  .book {
+    flex: 0 0 200px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    max-width: 80%;
+  }
+  .book {
+    flex: 0 0 30%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 70%;
+  }
+  .book {
+    flex: 0 0 22%;
+  }
 }

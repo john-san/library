@@ -24,7 +24,7 @@ Book.prototype.removeSelf = function() {
 
 Book.prototype.toggleReadStatus = function() {
   this.read = !this.read;
-  console.log(`Updated ${this.title}'s status to ${this.read}`);
+  console.log(`Updated ${this.title}'s read status to ${this.read}`);
 }
 
 function addBookToLibrary(book) {
@@ -112,10 +112,16 @@ function createReadIcon(book) {
 function createDeleteBtn() {
   const deleteBtn = document.createElement('button');
   deleteBtn.classList.add('btn', 'btn-danger');
-  deleteBtn.textContent = 'x';
+  const i = document.createElement('i');
+  i.classList.add('fas', 'fa-times');
+  // deleteBtn.textContent = 'x';
+  deleteBtn.appendChild(i);
   deleteBtn.addEventListener('click', (e) => {
-    const idx = parseInt((e.target.parentNode.getAttribute('data-attribute')));
-    myLibrary[idx].removeSelf();
+    const answer = confirm('Are you sure you want to remove this book?');
+    if (answer == true) {
+      const idx = parseInt((deleteBtn.parentNode.getAttribute('data-attribute')));
+      myLibrary[idx].removeSelf();      
+    }
   });
   return deleteBtn;
 }
@@ -189,10 +195,14 @@ function clearInvalidFeedbackMsgs() {
 }
 
 // Initialize
-const book1 = new Book('The Great Gatsby', 'F. Scott Fitzgerald', false, 'images/bc-thegreatgatsby.jpg');
+const book1 = new Book('The Great Gatsby', 'F. Scott Fitzgerald', true, 'images/bc-thegreatgatsby.jpg');
 const book2 = new Book('Harry Potter and the Philosopher\'s Stone', 'J. K. Rowling', false, 'images/bc-harrypotterandthephilosophersstone.jpg');
 const book3 = new Book('Animal Farm', 'George Orwell', false, 'images/bc-animalfarm.jpg');
+const book4 = new Book('The Grapes of Wrath', 'John Steinbeck', true, 'images/bc-thegrapesofwrath.jpg');
+const book5 = new Book('Invisible Man', 'Ralph Ellison', true, 'images/bc-invisibleman.jpg');
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
+addBookToLibrary(book4);
+addBookToLibrary(book5);
 displayBooks();
