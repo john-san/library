@@ -25,7 +25,7 @@ h1 {
 
 .container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -102,6 +102,7 @@ h1 {
 footer {
   text-align: center;
   margin-top: 30px;
+  margin-bottom: 25px;
 }
 
 footer i {
@@ -121,9 +122,6 @@ footer i:hover {
 }
 
 @media screen and (min-width: 700px) {
-  .container {
-    justify-content: flex-start;
-  }
   .book {
     flex: 0 0 200px;
   }
@@ -133,16 +131,10 @@ footer i:hover {
   .container {
     max-width: 80%;
   }
-  .book {
-    flex: 0 0 30%;
-  }
 }
 
 @media screen and (min-width: 1200px) {
   .container {
     max-width: 70%;
-  }
-  .book {
-    flex: 0 0 22%;
   }
 }
