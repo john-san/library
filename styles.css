@@ -49,3 +49,7 @@ h1 {
   padding: 8px;
   margin-bottom: 5px;
 }
+
+.read-status {
+  cursor: pointer;
+}
